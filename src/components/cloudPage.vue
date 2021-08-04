@@ -70,7 +70,7 @@ export default {
   props: {
     // 头部props
     customHeader: { type: Boolean, default: true }, // 是否展示头部组件
-    statusBarBG: { type: String, default: "none" }, // 状态栏颜色
+    statusBarBG: { type: String, default: "#fa6581" }, // 状态栏颜色
     headerIndex: { type: Number, default: 1 }, // 头部index
     headerBG: { type: String, default: "none" }, // 头部背景色
     headerHeight: { type: Number, default: 44 }, // tabbar高度
@@ -115,6 +115,8 @@ page {
 .grace-page-status-bar {
   width: 100%;
   height: 0;
+  position: fixed;
+  z-index: 100;
 }
 .gui-page-rb-area {
   width: 100rpx;
@@ -143,6 +145,7 @@ page {
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
+  box-sizing: border-box;
   /* background-color: #000; */
 }
 .grace-header-main {

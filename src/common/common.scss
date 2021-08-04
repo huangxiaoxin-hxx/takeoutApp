@@ -28,10 +28,37 @@
 .al_center {
   align-items: center;
 }
+.space_between {
+  justify-content: space-between;
+}
 .mb-20 {
   margin-bottom: 20rpx;
+}
+.mt-60 {
+  margin-top: 60rpx;
+}
+.mt-50 {
+  margin-top: 50rpx;
+}
+.mt-40 {
+  margin-top: 40rpx;
+}
+.mt-20 {
+  margin-top: 20rpx;
+}
+.mt-10 {
+  margin-top: 10rpx;
+}
+
+// 不换行滚动组合
+.scroll-x {
+  overflow-x:scroll
+}
+.nowrap {
+  white-space: nowrap;
 }
 
 $color-main: #fa6581;
 $color-white: #ffffff;
 $color-black: #000;
+$color-gray: #aaa;

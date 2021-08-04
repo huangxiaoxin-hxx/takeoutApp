@@ -11,14 +11,15 @@ export default {
   name: 'cloudLocation',
   data() {
     return {
-      address: null
+      address: "null"
     }
   },
-  created() {
+  mounted() {
     uni.getLocation({
       type: 'gcj02',
       geocode:true,
-      success: function (res) {
+      success: (res) => {
+        console.log(res)
         this.address = res.address
       },
       fail: function () {
