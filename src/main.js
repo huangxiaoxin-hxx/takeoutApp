@@ -11,6 +11,6 @@ App.mpType = "app";
 
 const app = new Vue({
   ...App,
-  store: $store
+  store: $store,
 });
 app.$mount();

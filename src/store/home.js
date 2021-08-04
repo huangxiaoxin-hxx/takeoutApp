@@ -7,8 +7,8 @@ const store = {
       data: [],
       page: 1,
       per_page: 15,
-      total: 0
-    }
+      total: 0,
+    },
   }),
   mutations: {
     setTakeoutList(state, data) {
@@ -20,7 +20,7 @@ const store = {
         oldData = data;
       }
       state.takeoutList = oldData;
-    }
+    },
   },
   getters: {},
   actions: {
@@ -28,8 +28,8 @@ const store = {
       const { data } = await getTakeoutList(params);
       console.log(data.data);
       commit("setTakeoutList", data.data);
-    }
-  }
+    },
+  },
 };
 
 export default store;

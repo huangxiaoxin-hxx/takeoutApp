@@ -11,11 +11,11 @@ export const $config = {
   name: "App", // 项目名称
   api: {
     baseUrl, // 后端接口地址
-    timeout: 10000 // 10秒超时
+    timeout: 10000, // 10秒超时
   },
   // 默认首页地址
   index: {
     url: "/pages/home/index",
-    type: "switchTab"
-  }
+    type: "switchTab",
+  },
 };

@@ -37,7 +37,7 @@
         right: rbRight + 'rpx',
         bottom: rbBottom + 'rpx',
         width: rbWidth + 'rpx',
-        zIndex: rbIndex
+        zIndex: rbIndex,
       }"
     >
       <slot name="gRTArea"></slot>
@@ -56,16 +56,16 @@
 </template>
 
 <script>
-import loadingHeart from './loading/loading5.vue'
+import loadingHeart from "./loading/loading5.vue";
 export default {
-  name: 'cloudPage',
+  name: "cloudPage",
   components: {
-    loadingHeart
+    loadingHeart,
   },
   data() {
     return {
       statusBarHeight: 0,
-    }
+    };
   },
   props: {
     // 头部props
@@ -86,8 +86,8 @@ export default {
   created() {
     var systemInfo = uni.getSystemInfoSync();
     this.statusBarHeight = systemInfo.statusBarHeight;
-  }
-}
+  },
+};
 </script>
 
 <style>

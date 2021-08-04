@@ -7,8 +7,8 @@ Vue.use(Vuex);
 
 const store = {
   modules: {
-    home
-  }
+    home,
+  },
 };
 
 const $store = new Vuex.Store(store);
