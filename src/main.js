@@ -1,14 +1,16 @@
-import Vue from 'vue'
-import App from './App'
-import uView from 'uview-ui'
+import Vue from "vue";
+import App from "./App";
+import uView from "uview-ui";
 import "./boot/mixin";
+import { $store } from "./store";
 
-Vue.config.productionTip = false
-Vue.use(uView)
+Vue.config.productionTip = false;
+Vue.use(uView);
 
-App.mpType = 'app'
+App.mpType = "app";
 
 const app = new Vue({
-  ...App
-})
-app.$mount()
+  ...App,
+  store: $store
+});
+app.$mount();

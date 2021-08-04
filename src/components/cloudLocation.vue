@@ -40,6 +40,10 @@ export default {
   box-sizing: border-box;
   .address {
     margin: 0 20rpx;
+    max-width: 300rpx;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis;
   }
 }
 </style>

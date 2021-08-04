@@ -1,6 +1,6 @@
 <template>
-  <cloudPage :isLoading="isLoading" :headerHeight="68">
-    <u-navbar height="68" :is-fixed="false" slot="gHeader" :is-back="false" :background="headerBackground" :title-color="headerTitleColor">
+  <cloudPage :isLoading="isLoading" :headerHeight="headerHeight">
+    <u-navbar height="44" :is-fixed="false" slot="gHeader" :is-back="false" :background="headerBackground" :title-color="headerTitleColor">
       <view class="slot-wrap">
 				<cloudLocation />
 			</view>
@@ -48,15 +48,23 @@
           </view>
         </view>
       </u-sticky>
-      <view class="list_box">
-        
+      <view class="list_box mt-40">
+        <view class="commodity_list flex" v-for="(item, index) in takeoutList.data" :key="index">
+          <image :src="item.image" />
+          <view class="flex1 commodity_content">
+            <view class="title flex al_center">
+              <image src="/static/home/list/discount.jpeg" class="discount_icon" />
+              <view class="name">{{item.name}}黄小心黄小心黄小心黄小心</view>
+            </view>
+          </view>
+        </view>
       </view>
     </view>
   </cloudPage>
 </template>
 
 <script>
-import { getPlaceholder, getTakeoutList } from '../../api/home'
+import { getPlaceholder } from '../../api/home'
 const fiveCategory = [
   {
     id: 1,
@@ -116,6 +124,7 @@ const screenData = [
     id: 5,
   },
 ]
+import { mapActions, mapState } from 'vuex'
 export default {
   name: "home",
   data() {
@@ -126,19 +135,29 @@ export default {
       screenData: screenData,
       input_offset: -88,
       screen_offset: 0,
-      takeoutList: []
+      // takeoutList: [],
+      headerHeight: 44
     }
+  },
+  computed: {
+    ...mapState("home", ["takeoutList"])
+  },
+  methods: {
+    ...mapActions("home", ["loadTakeoutList"])
   },
   async onLoad() {
     // #ifdef  APP-PLUS
     var systemInfo = uni.getSystemInfoSync();
     this.input_offset = systemInfo.statusBarHeight + 26;
     this.screen_offset = systemInfo.statusBarHeight + 140
+    this.headerHeight = 68
     // #endif
     this.isLoading = true
     const data = await getPlaceholder()
-    const takeout_list = await getTakeoutList({type: 'discount'})
-    this.takeoutList = takeout_list.data
+    await this.loadTakeoutList({type: 'discount'})
+    console.log(this.takeoutList)
+    // const takeout_list = await getTakeoutList({type: 'discount'})
+    // this.takeoutList = takeout_list.data.data
     this.placeholderData = data.data
     this.isLoading = false
     
@@ -163,9 +182,8 @@ page {
 .home_container {
   width: 100%;
   background-color: #f1f1f1;
-  padding: 0 32rpx;
+  padding: 0 32rpx 32rpx;
   box-sizing: border-box;
-  height: 200vh;
 }
 .top_info_box {
   width: 100%;
@@ -243,5 +261,36 @@ page {
     border-radius: 10rpx;
   }
 }
-
+.list_box {
+  .commodity_list {
+    width: 100%;
+    height: 186rpx;
+    margin-bottom: 20rpx;
+    background-color: #fff;
+    border-radius: 10rpx;
+    padding: 20rpx 20rpx;
+    box-sizing: border-box;
+    image {
+      width: 146rpx;
+      height: 146rpx;
+      border-radius: 10rpx;
+    }
+  }
+}
+.commodity_content {
+  padding: 0 10rpx;
+  .title {
+    .discount_icon {
+      width: 36rpx;
+      height: 36rpx;
+      margin-right: 20rpx;
+    }
+    .name {
+      width: 400rpx;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow:ellipsis;
+    }
+  }
+}
 </style>
