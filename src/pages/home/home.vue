@@ -139,7 +139,6 @@ export default {
     const data = await getPlaceholder()
     const takeout_list = await getTakeoutList({type: 'discount'})
     this.takeoutList = takeout_list.data
-    console.log(this.takeoutList)
     this.placeholderData = data.data
     this.isLoading = false
     
