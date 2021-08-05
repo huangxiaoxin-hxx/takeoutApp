@@ -1,5 +1,8 @@
 <template>
-  <view class="location_box flex al_center">
+  <view
+    class="location_box flex al_center"
+    @click="handleNavTo({ url: '/pages/address/address' })"
+  >
     <u-icon
       name="location"
       custom-prefix="custom-icon"
@@ -7,7 +10,7 @@
       size="36rpx"
     ></u-icon>
     <text class="address font-24 color-w">{{
-      address ? address.poiName : "定位信息失败"
+      address.address ? address.address.poiName : "定位信息失败"
     }}</text>
     <u-icon
       name="arrow-right"
@@ -18,20 +21,16 @@
 </template>
 
 <script>
+import { mapMutations, mapState } from "vuex";
 export default {
   name: "cloudLocation",
-  data() {
-    return {
-      address: "null",
-    };
-  },
   mounted() {
     uni.getLocation({
       type: "gcj02",
       geocode: true,
       success: (res) => {
         console.log(res);
-        this.address = res.address;
+        this.setAddress(res);
       },
       fail: function() {
         uni.showToast({
@@ -40,6 +39,12 @@ export default {
         });
       },
     });
+  },
+  computed: {
+    ...mapState("address", ["address"]),
+  },
+  methods: {
+    ...mapMutations("address", ["setAddress"]),
   },
 };
 </script>

@@ -1,9 +1,16 @@
 <template>
   <cloudPage :isLoading="isLoading" :headerHeight="headerHeight">
-    <u-navbar height="44" :is-fixed="false" slot="gHeader" :is-back="false" :background="headerBackground" :title-color="headerTitleColor">
+    <u-navbar
+      height="44"
+      :is-fixed="false"
+      slot="gHeader"
+      :is-back="false"
+      :background="headerBackground"
+      :title-color="headerTitleColor"
+    >
       <view class="slot-wrap">
-				<cloudLocation />
-			</view>
+        <cloudLocation />
+      </view>
       <view slot="right" class="right-wrap">
         <u-icon name="bell-fill" color="#fff" size="40rpx"></u-icon>
         <u-badge :is-dot="true" type="success"></u-badge>
@@ -16,16 +23,28 @@
         <u-sticky bg-color="#f1f1f1" :offset-top="input_offset">
           <view class="bg_gray header_bg_gray">
             <view class="fake_input flex al_center mb-20">
-              <u-icon name="search" color="#aaa" size="36" class="search_icon"></u-icon>
-              <text class="search_placeholder flex1">{{placeholderData && placeholderData.placeholder}}</text>
+              <u-icon
+                name="search"
+                color="#aaa"
+                size="36"
+                class="search_icon"
+              ></u-icon>
+              <text class="search_placeholder flex1">{{
+                placeholderData && placeholderData.placeholder
+              }}</text>
               <view class="button">搜索</view>
             </view>
           </view>
         </u-sticky>
         <view class="hot_box flex al_center">
           <view class="flex1 flex al_center">
-            <view class="hot_item font-24" v-for="(item, index) in placeholderData && placeholderData.hotData" :key="index">
-              {{item}}
+            <view
+              class="hot_item font-24"
+              v-for="(item, index) in placeholderData &&
+                placeholderData.hotData"
+              :key="index"
+            >
+              {{ item }}
             </view>
             <view class="rule font-24">资质规则</view>
           </view>
@@ -35,7 +54,7 @@
       <view class="flex space_between al_center mt-40">
         <view class="category_item" v-for="item in fiveCategory" :key="item.id">
           <image :src="item.image" class="category_item_image" />
-          <view class="category_item_name font-24 mt-10">{{item.name}}</view>
+          <view class="category_item_name font-24 mt-10">{{ item.name }}</view>
         </view>
       </view>
       <!-- 筛选类别 -->
@@ -43,18 +62,31 @@
         <view class="bg_gray screen_box">
           <view class="scroll-x">
             <view class="nowrap">
-              <p class="screen_list font-24" v-for="item in screenData" :key="item.id">{{item.name}}</p>
+              <p
+                class="screen_list font-24"
+                v-for="item in screenData"
+                :key="item.id"
+              >
+                {{ item.name }}
+              </p>
             </view>
           </view>
         </view>
       </u-sticky>
       <view class="list_box mt-40">
-        <view class="commodity_list flex" v-for="(item, index) in takeoutList.data" :key="index">
+        <view
+          class="commodity_list flex"
+          v-for="(item, index) in takeoutList.data"
+          :key="index"
+        >
           <image :src="item.image" />
           <view class="flex1 commodity_content">
             <view class="title flex al_center">
-              <image src="/static/home/list/discount.jpeg" class="discount_icon" />
-              <view class="name">{{item.name}}黄小心黄小心黄小心黄小心</view>
+              <image
+                src="/static/home/list/discount.jpeg"
+                class="discount_icon"
+              />
+              <view class="name">{{ item.name }}</view>
             </view>
           </view>
         </view>
@@ -64,39 +96,39 @@
 </template>
 
 <script>
-import { getPlaceholder } from '../../api/home'
+import { getPlaceholder } from "../../api/home";
 const fiveCategory = [
   {
     id: 1,
-    image: '/static/home/food.png',
+    image: "/static/home/food.png",
     name: "美食",
-    type: "food"
+    type: "food",
   },
   {
     id: 2,
-    image: '/static/home/drink.png',
+    image: "/static/home/drink.png",
     name: "甜点饮品",
-    type: "drink"
+    type: "drink",
   },
   {
     id: 3,
-    image: '/static/home/supermarket.png',
+    image: "/static/home/supermarket.png",
     name: "超市便利",
-    type: "supermarket"
+    type: "supermarket",
   },
   {
     id: 4,
-    image: '/static/home/fresh.png',
+    image: "/static/home/fresh.png",
     name: "生鲜果蔬",
-    type: "fresh"
+    type: "fresh",
   },
   {
     id: 5,
-    image: '/static/home/flower.png',
+    image: "/static/home/flower.png",
     name: "鲜花蛋糕",
-    type: "flower"
+    type: "flower",
   },
-]
+];
 const screenData = [
   {
     name: "天天神券",
@@ -123,8 +155,8 @@ const screenData = [
     type: "fullminus",
     id: 5,
   },
-]
-import { mapActions, mapState } from 'vuex'
+];
+import { mapActions, mapState } from "vuex";
 export default {
   name: "home",
   data() {
@@ -136,33 +168,32 @@ export default {
       input_offset: -88,
       screen_offset: 0,
       // takeoutList: [],
-      headerHeight: 44
-    }
+      headerHeight: 44,
+    };
   },
   computed: {
-    ...mapState("home", ["takeoutList"])
+    ...mapState("home", ["takeoutList"]),
   },
   methods: {
-    ...mapActions("home", ["loadTakeoutList"])
+    ...mapActions("home", ["loadTakeoutList"]),
   },
   async onLoad() {
     // #ifdef  APP-PLUS
     var systemInfo = uni.getSystemInfoSync();
     this.input_offset = systemInfo.statusBarHeight + 26;
-    this.screen_offset = systemInfo.statusBarHeight + 140
-    this.headerHeight = 68
+    this.screen_offset = systemInfo.statusBarHeight + 140;
+    this.headerHeight = 68;
     // #endif
-    this.isLoading = true
-    const data = await getPlaceholder()
-    await this.loadTakeoutList({type: 'discount'})
-    console.log(this.takeoutList)
+    this.isLoading = true;
+    const data = await getPlaceholder();
+    await this.loadTakeoutList({ type: "discount" });
+    console.log(this.takeoutList);
     // const takeout_list = await getTakeoutList({type: 'discount'})
     // this.takeoutList = takeout_list.data.data
-    this.placeholderData = data.data
-    this.isLoading = false
-    
-  }
-}
+    this.placeholderData = data.data;
+    this.isLoading = false;
+  },
+};
 </script>
 
 <style scoped>
@@ -247,11 +278,12 @@ page {
   }
   .category_item_name {
     text-align: center;
-    color: $color-black
+    color: $color-black;
   }
 }
 .screen_box {
   padding-top: 40rpx;
+  padding-bottom: 20rpx;
   background-color: #f1f1f1;
   .screen_list {
     background-color: $color-white;
@@ -289,7 +321,7 @@ page {
       width: 400rpx;
       overflow: hidden;
       white-space: nowrap;
-      text-overflow:ellipsis;
+      text-overflow: ellipsis;
     }
   }
 }

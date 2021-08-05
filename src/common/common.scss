@@ -1,6 +1,9 @@
 .font-24 {
   font-size: 24rpx;
 }
+.font-28 {
+  font-size: 28rpx;
+}
 .font-36 {
   font-size: 36rpx;
 }
@@ -19,6 +22,11 @@
 .color-b {
   color: #000;
 }
+
+.bg_white {
+  background-color: #fff;
+}
+
 .flex {
   display: flex;
 }
@@ -49,10 +57,27 @@
 .mt-10 {
   margin-top: 10rpx;
 }
+.ml-10 {
+  margin-left: 10rpx;
+}
+.mr-10 {
+  margin-right: 10rpx;
+}
+.mr-20 {
+  margin-right: 20rpx;
+}
+.mr-30 {
+  margin-right: 30rpx;
+}
+
+.p20 {
+  padding: 20rpx;
+  box-sizing: border-box;
+}
 
 // 不换行滚动组合
 .scroll-x {
-  overflow-x:scroll
+  overflow-x: scroll;
 }
 .nowrap {
   white-space: nowrap;
@@ -62,3 +87,18 @@ $color-main: #fa6581;
 $color-white: #ffffff;
 $color-black: #000;
 $color-gray: #aaa;
+
+// 不换行省略号
+.ellipsis_one {
+  overflow: hidden; //超出的文本隐藏
+  text-overflow: ellipsis; //溢出用省略号显示
+  white-space: nowrap;
+}
+
+.w-350 {
+  width: 350rpx;
+}
+
+.text_align_r {
+  text-align: right;
+}
