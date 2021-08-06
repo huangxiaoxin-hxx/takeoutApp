@@ -61,56 +61,56 @@
   </view>
 </template>
 <script>
-import cityData from './cityData'
+import cityData from "./cityData";
 
 export default {
   props: {
     hotCitys: {
       type: Array,
       default() {
-        return []
-      }
+        return [];
+      },
     },
     value: {
-      type: String
-    }
+      type: String,
+    },
   },
   data() {
     return {
       cityData,
-      windowHeight: '',
-      scrollIntoId: ''
-    }
+      windowHeight: "",
+      scrollIntoId: "",
+    };
   },
   computed: {
     current: {
       get() {
-        return this.value
+        return this.value;
       },
       set(val) {
-        return val
-      }
-    }
+        return val;
+      },
+    },
   },
   mounted() {
-    this.getSystemInfo()
+    this.getSystemInfo();
   },
   methods: {
     getSystemInfo() {
       uni.getSystemInfo().then(([error, data]) => {
-        this.windowHeight = `${data.windowHeight}px`
-      })
+        this.windowHeight = `${data.windowHeight}px`;
+      });
     },
     scrollTo(letter) {
-      this.scrollIntoId = letter === '#' ? 'current' : letter
+      this.scrollIntoId = letter === "#" ? "current" : letter;
     },
     onSelect(city) {
-      this.current = city
-      this.$emit('input', city)
-      this.$emit('on-select', city)
-    }
-  }
-}
+      this.current = city;
+      this.$emit("input", city);
+      this.$emit("on-select", city);
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -122,7 +122,8 @@ export default {
     .index {
       position: absolute;
       right: 0;
-      bottom: 20upx;
+      top: 50%;
+      transform: translateY(-50%);
       z-index: 999;
       color: #2f9bfe;
       font-size: 32upx;

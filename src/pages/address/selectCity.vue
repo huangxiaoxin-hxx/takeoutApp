@@ -38,7 +38,7 @@ export default {
   },
   data() {
     return {
-      value: "北京",
+      value: "",
       hotCitys: hotCitys,
     };
   },

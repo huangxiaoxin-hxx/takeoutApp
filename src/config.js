@@ -18,4 +18,6 @@ export const $config = {
     url: "/pages/home/index",
     type: "switchTab",
   },
+  // 高德key
+  amapKey: "0958fe854aa62fc91e35465b47c16634",
 };

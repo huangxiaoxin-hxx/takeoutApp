@@ -85,6 +85,30 @@
           </view>
         </view>
       </view>
+      <!-- 周边位置信息 h5获取不到，需真机调试 -->
+      <!-- #ifdef APP-PLUS -->
+      <view class="around_address">
+        <u-sticky :offset-top="around_address_height">
+          <view class="around_address_title">
+            <u-icon
+              name="location"
+              custom-prefix="custom-icon"
+              color="#000"
+              size="32rpx"
+            ></u-icon>
+            <text class="ml-10 color-b font-28">附近地址</text>
+          </view>
+        </u-sticky>
+        <view
+          class="around_address_list al_center"
+          v-for="(item, index) in aroundList"
+          :key="index"
+          @click="handleAround(item)"
+        >
+          {{ item.name }}
+        </view>
+      </view>
+      <!-- #endif -->
     </view>
   </cloudPage>
 </template>
@@ -92,14 +116,17 @@
 <script>
 import { mapMutations, mapState } from "vuex";
 import { getAddressList } from "@/api/address";
-import amap from "@/utils/js_sdk/amap-wx";
+// import amap from "@/utils/js_sdk/amap-wx";
+import amapPlugin from "@/utils/amapPlugin";
 export default {
   name: "addressPage",
   data() {
     return {
       isLoading: false,
       addressList: [],
+      aroundList: [],
       my_address_height: 186,
+      around_address_height: 266,
     };
   },
   computed: {
@@ -113,10 +140,15 @@ export default {
     handleFocus() {},
     handleBlur() {},
     handleAddress(item) {
-      console.log(item);
       this.selelctAddress({
         id: item.id,
         name: item.address,
+      });
+    },
+    handleAround(item) {
+      this.selelctAddress({
+        id: null,
+        name: item.name,
       });
     },
   },
@@ -125,6 +157,8 @@ export default {
     var systemInfo = uni.getSystemInfoSync();
     this.my_address_height =
       this.my_address_height + systemInfo.statusBarHeight + 100;
+    this.around_address_height =
+      this.around_address_height + systemInfo.statusBarHeight + 100;
     // #endif
     this.isLoading = true;
     const addressList = await getAddressList();
@@ -132,17 +166,11 @@ export default {
     this.isLoading = false;
   },
   async onShow() {
-    const amapPlugin = new amap.AMapWX({
-      key: "0958fe854aa62fc91e35465b47c16634", //该key 是在高德中申请的微信小程序key
-    });
     amapPlugin.getRegeo({
       type: "gcj02", //map 组件使用的经纬度是国测局坐标， type 为 gcj02
       success: (res) => {
-        console.log(res);
-        const latitude = res[0].latitude;
-        const longitude = res[0].longitude;
+        this.aroundList = res[0].regeocodeData.pois;
       },
-
       fail: (res) => {
         console.log(JSON.stringify(res));
       },
@@ -194,6 +222,21 @@ export default {
           color: $color-main;
         }
       }
+    }
+  }
+  .around_address {
+    width: 100%;
+    padding: 0 30rpx;
+    .around_address_title {
+      height: 80rpx;
+      line-height: 80rpx;
+      background-color: #fff;
+    }
+    .around_address_list {
+      width: 100%;
+      height: 100rpx;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      line-height: 100rpx;
     }
   }
 }
