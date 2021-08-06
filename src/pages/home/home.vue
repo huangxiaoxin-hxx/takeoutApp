@@ -59,36 +59,14 @@
       </view>
       <!-- 筛选类别 -->
       <u-sticky bg-color="#f1f1f1" :offset-top="screen_offset">
-        <view class="bg_gray screen_box">
-          <view class="scroll-x">
-            <view class="nowrap">
-              <p
-                class="screen_list font-24"
-                v-for="item in screenData"
-                :key="item.id"
-              >
-                {{ item.name }}
-              </p>
-            </view>
-          </view>
-        </view>
+        <screen-list-scroll-x
+          :screenData="screenData"
+          @handleScreen="handleScreen"
+        ></screen-list-scroll-x>
       </u-sticky>
       <view class="list_box mt-40">
-        <view
-          class="commodity_list flex"
-          v-for="(item, index) in takeoutList.data"
-          :key="index"
-        >
-          <image :src="item.image" />
-          <view class="flex1 commodity_content">
-            <view class="title flex al_center">
-              <image
-                src="/static/home/list/discount.jpeg"
-                class="discount_icon"
-              />
-              <view class="name">{{ item.name }}</view>
-            </view>
-          </view>
+        <view v-for="(item, index) in takeoutList.data" :key="index">
+          <commodity-box :commodityData="item" />
         </view>
       </view>
     </view>
@@ -96,7 +74,7 @@
 </template>
 
 <script>
-import { getPlaceholder } from "../../api/home";
+import { getPlaceholder } from "@/api/home";
 const fiveCategory = [
   {
     id: 1,
@@ -157,6 +135,8 @@ const screenData = [
   },
 ];
 import { mapActions, mapState } from "vuex";
+import commodityBox from "@/components/commodityBox.vue";
+import screenListScrollX from "@/components/screenListScrollX.vue";
 export default {
   name: "home",
   data() {
@@ -167,15 +147,32 @@ export default {
       screenData: screenData,
       input_offset: -88,
       screen_offset: 0,
-      // takeoutList: [],
       headerHeight: 44,
+      selectScreen: {},
     };
+  },
+  components: {
+    commodityBox,
+    screenListScrollX,
   },
   computed: {
     ...mapState("home", ["takeoutList"]),
   },
   methods: {
     ...mapActions("home", ["loadTakeoutList"]),
+    // 筛选类别函数
+    handleScreen(data) {
+      this.selectScreen = data;
+      console.log(this.selectScreen);
+    },
+  },
+  watch: {
+    selectScreen: {
+      handler: function(val) {
+        this.loadTakeoutList(val);
+      },
+      deep: true,
+    },
   },
   async onLoad() {
     // #ifdef  APP-PLUS
@@ -186,8 +183,8 @@ export default {
     // #endif
     this.isLoading = true;
     const data = await getPlaceholder();
-    await this.loadTakeoutList({ type: "discount" });
-    console.log(this.takeoutList);
+    await this.loadTakeoutList({ discount: true });
+    // console.log(this.takeoutList);
     // const takeout_list = await getTakeoutList({type: 'discount'})
     // this.takeoutList = takeout_list.data.data
     this.placeholderData = data.data;
@@ -291,6 +288,10 @@ page {
     display: inline-block;
     margin-right: 20rpx;
     border-radius: 10rpx;
+  }
+  .select_screen {
+    background-color: $color-main;
+    color: #fff;
   }
 }
 .list_box {

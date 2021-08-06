@@ -26,7 +26,6 @@ const store = {
   actions: {
     async loadTakeoutList({ commit }, params) {
       const { data } = await getTakeoutList(params);
-      console.log(data.data);
       commit("setTakeoutList", data.data);
     },
   },
