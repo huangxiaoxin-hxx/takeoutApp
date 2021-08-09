@@ -22,7 +22,10 @@
         <!-- 搜索框吸顶 -->
         <u-sticky bg-color="#f1f1f1" :offset-top="input_offset">
           <view class="bg_gray header_bg_gray">
-            <view class="fake_input flex al_center mb-20">
+            <view
+              class="fake_input flex al_center mb-20"
+              @click="handleNavTo({ url: '/pages/search/search' })"
+            >
               <u-icon
                 name="search"
                 color="#aaa"

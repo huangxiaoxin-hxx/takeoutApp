@@ -22,6 +22,9 @@
     },
     {
       "path": "pages/address/selectCity"
+    },
+    {
+      "path": "pages/search/search"
     }
   ],
   "globalStyle": {
